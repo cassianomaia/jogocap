@@ -14,9 +14,9 @@ int main(){
     int j;//coluna
     int k;//k-plano
     int contagem=0;//para efeito visual
-    int vitoria;
+    int vitoria = 0;
     struct jogador jogador[2];
-    struct jogador *turno;
+    struct jogador *turno, *jvitoria;
     jogador[0].id=1;
     jogador[1].id=2;
     jogador[0].unidade='x';
@@ -59,5 +59,21 @@ int main(){
         turno = turno->proximo;
     }while(vitoria!=1);
 
+    system("cls");
+     for(k=0;k<3;k++){
+        printf(" \t0\t1\t2\n");
+        for(i=jogador[0].proximo = &jogador[1];0;i<3;i++){
+            printf("%d\t",contagem);
+            for(j=0;j<3;j++){
+                printf("%c\t",tabuleiro[i][j][k]);
+            }
+            contagem++;
+            printf("\n");
+        }
+        contagem=0;
+        printf("\n\n");
+    }
+
+    printf("O jogador %d venceu !!!!!", *jvitoria->id);
     return 0;
 }
