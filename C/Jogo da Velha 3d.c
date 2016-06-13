@@ -23,6 +23,8 @@ int main(){
     jogador[1].unidade='o';
     jogador[0].proximo = &jogador[1];
     jogador[1].proximo = &jogador[0];
+
+    //povoa o vetor com traços
     for(k=0;k<3;k++){
         for(i=0;i<3;i++){
             for(j=0;j<3;j++){
@@ -31,7 +33,7 @@ int main(){
         }
     }
 
-
+    //turno começa
     turno = &jogador[1];
     do{
         system("cls");
@@ -59,6 +61,7 @@ int main(){
         turno = turno->proximo;
     }while(vitoria!=1);
 
+    //Qd vitoria for atingida
     system("cls");
      for(k=0;k<3;k++){
         printf(" \t0\t1\t2\n");
@@ -73,7 +76,6 @@ int main(){
         contagem=0;
         printf("\n\n");
     }
-
     printf("O jogador %d venceu !!!!!", *jvitoria->id);
     return 0;
 }
