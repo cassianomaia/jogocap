@@ -39,7 +39,7 @@ int main(){
         system("cls");
         for(k=0;k<3;k++){
             printf(" \t0\t1\t2\n");
-            for(i=jogador[0].proximo = &jogador[1];0;i<3;i++){
+            for(i=0;i<3;i++){
                 printf("%d\t",contagem);
                 for(j=0;j<3;j++){
                     printf("%c\t",tabuleiro[i][j][k]);
@@ -51,11 +51,21 @@ int main(){
             printf("\n\n");
         }
         printf("Turno do jogador %d.\nDigite as coordenadas(X,Y,Z):\n", turno->id);
-        scanf("%d%d%d",&i,&j,&k);
+        printf("X:");
+        scanf("%d", &i);
+        printf("Y:");
+        scanf("%d", &j);
+        printf("Z:");
+        scanf("%d", &k);
         tabuleiro[i][j][k]=turno->unidade;
         while((i<0)||(i>3)||(j<0)||(j>3)||(k<0)||(k>3)){
             printf("Digite uma coordenada válida:\n");
-            scanf("%d%d%d",&i,&j,&k);
+            printf("X:");
+            scanf("%d", &i);
+            printf("Y:");
+            scanf("%d", &j);
+            printf("Z:");
+            scanf("%d", &k);
             tabuleiro[i][j][k]=turno->unidade;
         }
         turno = turno->proximo;
@@ -65,7 +75,7 @@ int main(){
     system("cls");
      for(k=0;k<3;k++){
         printf(" \t0\t1\t2\n");
-        for(i=jogador[0].proximo = &jogador[1];0;i<3;i++){
+        for(i=0;i<3;i++){
             printf("%d\t",contagem);
             for(j=0;j<3;j++){
                 printf("%c\t",tabuleiro[i][j][k]);
@@ -76,6 +86,6 @@ int main(){
         contagem=0;
         printf("\n\n");
     }
-    printf("O jogador %d venceu !!!!!", *jvitoria->id);
+    printf("O jogador %d venceu !!!!!", jvitoria->id);
     return 0;
 }
