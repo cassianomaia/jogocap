@@ -2,19 +2,20 @@
 #include<stdlib.h>
 #include<string.h>
 
+int vitoria = 0;
+int i,j,k, contagem =1;
+void printmatriz (char tabuleiroprint[3][3][3]);
+void checkdiagonal (char tabuleirod[3][3][3]);
+void checkplano (char tabuleirop[3][3][3]);
 
 struct jogador{
     int id;
     char unidade;
     struct jogador *proximo;
 };
+
 int main(){
     char tabuleiro[3][3][3];
-    int i;//i=linha
-    int j;//coluna
-    int k;//k-plano
-    int contagem=0;//para efeito visual
-    int vitoria = 0;
     struct jogador jogador[2];
     struct jogador *turno, *jvitoria;
     jogador[0].id=1;
@@ -36,20 +37,8 @@ int main(){
     //turno começa
     turno = &jogador[1];
     do{
-        system("cls");
-        for(k=0;k<3;k++){
-            printf(" \t0\t1\t2\n");
-            for(i=0;i<3;i++){
-                printf("%d\t",contagem);
-                for(j=0;j<3;j++){
-                    printf("%c\t",tabuleiro[i][j][k]);
-                }
-                contagem++;
-                printf("\n");
-            }
-            contagem=0;
-            printf("\n\n");
-        }
+        turno = turno->proximo;
+        printmatriz(tabuleiro);
         printf("Turno do jogador %d.\nDigite as coordenadas(X,Y,Z):\n", turno->id);
         printf("X:");
         scanf("%d", &i);
@@ -57,7 +46,7 @@ int main(){
         scanf("%d", &j);
         printf("Z:");
         scanf("%d", &k);
-        tabuleiro[i][j][k]=turno->unidade;
+        tabuleiro[i-1][j-1][k-1]=turno->unidade;
         while((i<0)||(i>3)||(j<0)||(j>3)||(k<0)||(k>3)){
             printf("Digite uma coordenada válida:\n");
             printf("X:");
@@ -66,26 +55,39 @@ int main(){
             scanf("%d", &j);
             printf("Z:");
             scanf("%d", &k);
-            tabuleiro[i][j][k]=turno->unidade;
+            tabuleiro[i-1][j-1][k-1]=turno->unidade;
         }
-        turno = turno->proximo;
     }while(vitoria!=1);
 
-    //Qd vitoria for atingida
+    //vitoria for atingida
+    printmatriz(tabuleiro);
+    printf("O jogador %d venceu !!!!!", jvitoria->id);
+    return 0;
+}
+
+void checkdiagonal (char tabuleirod[3][3][3]){
+
+}
+
+void checkplano (char tabuleirop[3][3][3]){
+//    for(i=0;i<2;i++){
+//        if(tabuleirop[])
+//    }
+}
+
+void printmatriz (char tabuleiroprint[3][3][3]){
     system("cls");
      for(k=0;k<3;k++){
-        printf(" \t0\t1\t2\n");
+        printf(" \t1\t2\t3\n");
         for(i=0;i<3;i++){
             printf("%d\t",contagem);
             for(j=0;j<3;j++){
-                printf("%c\t",tabuleiro[i][j][k]);
+                printf("%c\t",tabuleiroprint[i][j][k]);
             }
             contagem++;
             printf("\n");
         }
-        contagem=0;
+        contagem=1;
         printf("\n\n");
     }
-    printf("O jogador %d venceu !!!!!", jvitoria->id);
-    return 0;
 }
