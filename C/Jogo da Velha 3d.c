@@ -17,7 +17,7 @@ struct jogador{
 int main(){
     char tabuleiro[3][3][3];
     struct jogador jogador[2];
-    struct jogador *turno, *jvitoria;
+    struct jogador *turno;
     jogador[0].id=1;
     jogador[1].id=2;
     jogador[0].unidade='x';
@@ -57,11 +57,12 @@ int main(){
             scanf("%d", &k);
             tabuleiro[i-1][j-1][k-1]=turno->unidade;
         }
+        checkplano(tabuleiro);
     }while(vitoria!=1);
 
     //vitoria for atingida
     printmatriz(tabuleiro);
-    printf("O jogador %d venceu !!!!!", jvitoria->id);
+    printf("O jogador %d venceu !!!!!", turno->id);
     return 0;
 }
 
@@ -70,8 +71,18 @@ void checkdiagonal (char tabuleirod[3][3][3]){
 }
 
 void checkplano (char tabuleirop[3][3][3]){
-    for(i=0;i<2;i++){
-        if(tabuleirop[])
+    for(k=0;k<3;k++){
+        if((tabuleirop[0][0][k] == tabuleirop[1][1][k] && tabuleirop[0][0][k] == tabuleirop[2][2][k] && tabuleirop[0][0][k] != '-') ||
+           (tabuleirop[0][2][k] == tabuleirop[1][1][k] && tabuleirop[0][2][k] == tabuleirop[2][0][k] && tabuleirop[0][2][k] != '-')){
+            vitoria = 1;
+        }else{
+            for(i=0;i<3;i++){
+                if((tabuleirop[i][0][k] == tabuleirop[i][1][k] && tabuleirop[i][0][k] == tabuleirop[i][2][k] && tabuleirop[i][0][k] != '-')||
+                (tabuleirop[0][i][k] == tabuleirop[1][i][k] && tabuleirop[0][i][k] == tabuleirop[2][i][k] && tabuleirop[0][i][k] != '-')){
+                    vitoria = 1;
+                }
+            }
+        }
     }
 }
 
