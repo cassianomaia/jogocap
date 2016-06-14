@@ -70,9 +70,9 @@ void checkdiagonal (char tabuleirod[3][3][3]){
 }
 
 void checkplano (char tabuleirop[3][3][3]){
-//    for(i=0;i<2;i++){
-//        if(tabuleirop[])
-//    }
+    for(i=0;i<2;i++){
+        if(tabuleirop[])
+    }
 }
 
 void printmatriz (char tabuleiroprint[3][3][3]){
