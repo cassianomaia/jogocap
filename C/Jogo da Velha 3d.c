@@ -12,7 +12,7 @@ struct jogador{
 };
 
 //declaração de protótipos de funções
-void printmatriz (char tabuleirop[3][3][3]);
+void printmatriz (char *printer);
 void checkdiagonal (char tabuleirod[3][3][3]);
 void checkplano (char tabuleirop[3][3][3]);
 
@@ -138,7 +138,7 @@ void checkplano (char tabuleirop[3][3][3]){
     }
 }
 
-void printmatriz (char tabuleirop[3][3][3]){
+void printmatriz (char *printer){
     int contagem = 1;
     system("cls");
      for(k=0;k<3;k++){
@@ -146,7 +146,7 @@ void printmatriz (char tabuleirop[3][3][3]){
         for(i=0;i<3;i++){
             printf("%d\t",contagem);
             for(j=0;j<3;j++){
-                printf("%c\t",tabuleirop[i][j][k]);
+                printf("%c\t",*(((printer+j)+i)+k));
             }
             contagem++;
             printf("\n");
