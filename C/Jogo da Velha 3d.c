@@ -3,8 +3,8 @@
 #include<string.h>
 
 int vitoria = 0;
-int i,j,k, contagem =1;
-void printmatriz (char tabuleiroprint[3][3][3]);
+int i,j,k;
+void printmatriz (char *printer, int i1, int j1, int k1);
 void checkdiagonal (char tabuleirod[3][3][3]);
 void checkplano (char tabuleirop[3][3][3]);
 
@@ -38,7 +38,7 @@ int main(){
     turno = &jogador[1];
     do{
         turno = turno->proximo;
-        printmatriz(tabuleiro);
+        printmatriz(tabuleiro, 3, 3, 3);
         printf("Turno do jogador %d.\nDigite as coordenadas(X,Y,Z):\n", turno->id);
         printf("X:");
         scanf("%d", &i);
@@ -62,7 +62,7 @@ int main(){
     }while(vitoria!=1);
 
     //vitoria for atingida
-    printmatriz(tabuleiro);
+    printmatriz(tabuleiro, 3, 3, 3);
     printf("O jogador %d venceu !!!!!", turno->id);
     return 0;
 }
@@ -121,14 +121,15 @@ void checkplano (char tabuleirop[3][3][3]){
     }
 }
 
-void printmatriz (char tabuleiroprint[3][3][3]){
+void printmatriz (char *printer, int i1, int j1, int k1){
+    int contagem = 1;
     system("cls");
-     for(k=0;k<3;k++){
+     for(k=0;k<k1;k++){
         printf(" \t1\t2\t3\n");
-        for(i=0;i<3;i++){
+        for(i=0;i<i1;i++){
             printf("%d\t",contagem);
-            for(j=0;j<3;j++){
-                printf("%c\t",tabuleiroprint[i][j][k]);
+            for(j=0;j<j1;j++){
+                printf("%c\t",*(((printer+j)+i)+k));
             }
             contagem++;
             printf("\n");
