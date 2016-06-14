@@ -4,7 +4,7 @@
 
 int vitoria = 0;
 int i,j,k;
-void printmatriz (char *printer, int i1, int j1, int k1);
+void printmatriz (char tabuleirop[3][3][3]);
 void checkdiagonal (char tabuleirod[3][3][3]);
 void checkplano (char tabuleirop[3][3][3]);
 
@@ -18,10 +18,11 @@ int main(){
     char tabuleiro[3][3][3];
     struct jogador jogador[2];
     struct jogador *turno;
+    int x, y, z;
     jogador[0].id=1;
     jogador[1].id=2;
-    jogador[0].unidade='x';
-    jogador[1].unidade='o';
+    jogador[0].unidade='X';
+    jogador[1].unidade='O';
     jogador[0].proximo = &jogador[1];
     jogador[1].proximo = &jogador[0];
 
@@ -38,31 +39,31 @@ int main(){
     turno = &jogador[1];
     do{
         turno = turno->proximo;
-        printmatriz(tabuleiro, 3, 3, 3);
+        printmatriz(tabuleiro);
         printf("Turno do jogador %d.\nDigite as coordenadas(X,Y,Z):\n", turno->id);
         printf("X:");
-        scanf("%d", &i);
+        scanf("%d", &x);
         printf("Y:");
-        scanf("%d", &j);
+        scanf("%d", &y);
         printf("Z:");
-        scanf("%d", &k);
-        tabuleiro[i-1][j-1][k-1]=turno->unidade;
-        while((i<0)||(i>3)||(j<0)||(j>3)||(k<0)||(k>3)){
+        scanf("%d", &z);
+        tabuleiro[x-1][y-1][z-1]=turno->unidade;
+        while((x<0)||(x>3)||(y<0)||(y>3)||(z<0)||(z>3)){
             printf("Digite uma coordenada válida:\n");
             printf("X:");
-            scanf("%d", &i);
+            scanf("%d", &x);
             printf("Y:");
-            scanf("%d", &j);
+            scanf("%d", &y);
             printf("Z:");
-            scanf("%d", &k);
-            tabuleiro[i-1][j-1][k-1]=turno->unidade;
+            scanf("%d", &z);
+            tabuleiro[x-1][y-1][z-1]=turno->unidade;
         }
         checkdiagonal(tabuleiro);
         checkplano(tabuleiro);
     }while(vitoria!=1);
 
     //vitoria for atingida
-    printmatriz(tabuleiro, 3, 3, 3);
+    printmatriz(tabuleiro);
     printf("O jogador %d venceu !!!!!", turno->id);
     return 0;
 }
@@ -73,6 +74,10 @@ void checkdiagonal (char tabuleirod[3][3][3]){
         (tabuleirod[1][1][1] == tabuleirod[0][2][0] && tabuleirod[1][1][1] == tabuleirod[2][0][2]) ||
         (tabuleirod[1][1][1] == tabuleirod[2][0][0] && tabuleirod[1][1][1] == tabuleirod[0][2][2])) && (tabuleirod[1][1][1] != '-')){
         vitoria = 1;
+    }else{
+        if(tabuleirod[1][1][1] == tabuleirod[1][1][3] && tabuleirod[1][1][1] == tabuleirod[1][1][2] && tabuleirod[1][1][1] != '-'){
+            vitoria = 1;
+        }
     }
 }
 
@@ -121,15 +126,15 @@ void checkplano (char tabuleirop[3][3][3]){
     }
 }
 
-void printmatriz (char *printer, int i1, int j1, int k1){
+void printmatriz (char tabuleirop[3][3][3]){
     int contagem = 1;
     system("cls");
-     for(k=0;k<k1;k++){
+     for(k=0;k<3;k++){
         printf(" \t1\t2\t3\n");
-        for(i=0;i<i1;i++){
+        for(i=0;i<3;i++){
             printf("%d\t",contagem);
-            for(j=0;j<j1;j++){
-                printf("%c\t",*(((printer+j)+i)+k));
+            for(j=0;j<3;j++){
+                printf("%c\t",tabuleirop[i][j][k]);
             }
             contagem++;
             printf("\n");
