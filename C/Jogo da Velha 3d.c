@@ -1,29 +1,33 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<time.h>
 
+//declaração de variaveis globais
 int vitoria = 0;
 int i,j,k;
+struct jogador{
+    char unidade, nome[50];
+    struct jogador *proximo;
+};
+
+//declaração de protótipos de funções
 void printmatriz (char tabuleirop[3][3][3]);
 void checkdiagonal (char tabuleirod[3][3][3]);
 void checkplano (char tabuleirop[3][3][3]);
 
-struct jogador{
-    int id;
-    char unidade;
-    struct jogador *proximo;
-};
-
 int main(){
+    //declaração de variaveis locais
     char tabuleiro[3][3][3];
     struct jogador jogador[2];
     struct jogador *turno;
     int x, y, z;
-    jogador[0].id=1;
-    jogador[1].id=2;
+    srand(time(NULL));
+
+    //povoamento da array de variaveis heterogeneas
     jogador[0].unidade='X';
-    jogador[1].unidade='O';
     jogador[0].proximo = &jogador[1];
+    jogador[1].unidade='O';
     jogador[1].proximo = &jogador[0];
 
     //povoa o vetor com traços
@@ -35,12 +39,19 @@ int main(){
         }
     }
 
-    //turno começa
-    turno = &jogador[1];
+    //nome dos jogadores
+    printf("Jogo da velha, digite o nome dos jogadores:\n");
+    printf("Jogador 1[X]:");
+    gets(jogador[0].nome);
+    printf("Jogador 2[O]:");
+    gets(jogador[1].nome);
+
+    //fase de turnos, jogo começa
+    turno = &jogador[rand()%2];
     do{
         turno = turno->proximo;
         printmatriz(tabuleiro);
-        printf("Turno do jogador %d.\nDigite as coordenadas(X,Y,Z):\n", turno->id);
+        printf("Turno de %s.\nDigite as coordenadas(X,Y,Z):\n", turno->nome);
         printf("X:");
         scanf("%d", &x);
         printf("Y:");
@@ -62,12 +73,13 @@ int main(){
         checkplano(tabuleiro);
     }while(vitoria!=1);
 
-    //vitoria for atingida
+    //condição de vitória satisfeita
     printmatriz(tabuleiro);
-    printf("O jogador %d venceu !!!!!", turno->id);
+    printf("O jogador %s venceu !!!!!", turno->nome);
     return 0;
 }
 
+//procedimentos
 void checkdiagonal (char tabuleirod[3][3][3]){
     if(((tabuleirod[1][1][1] == tabuleirod[0][0][0] && tabuleirod[1][1][1] == tabuleirod[2][2][2]) ||
         (tabuleirod[1][1][1] == tabuleirod[0][0][2] && tabuleirod[1][1][1] == tabuleirod[2][2][0]) ||
