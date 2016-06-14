@@ -57,6 +57,7 @@ int main(){
             scanf("%d", &k);
             tabuleiro[i-1][j-1][k-1]=turno->unidade;
         }
+        checkdiagonal(tabuleiro);
         checkplano(tabuleiro);
     }while(vitoria!=1);
 
@@ -67,7 +68,12 @@ int main(){
 }
 
 void checkdiagonal (char tabuleirod[3][3][3]){
-
+    if(((tabuleirod[1][1][1] == tabuleirod[0][0][0] && tabuleirod[1][1][1] == tabuleirod[2][2][2]) ||
+        (tabuleirod[1][1][1] == tabuleirod[0][0][2] && tabuleirod[1][1][1] == tabuleirod[2][2][0]) ||
+        (tabuleirod[1][1][1] == tabuleirod[0][2][0] && tabuleirod[1][1][1] == tabuleirod[2][0][2]) ||
+        (tabuleirod[1][1][1] == tabuleirod[2][0][0] && tabuleirod[1][1][1] == tabuleirod[0][2][2])) && (tabuleirod[1][1][1] != '-')){
+        vitoria = 1;
+    }
 }
 
 void checkplano (char tabuleirop[3][3][3]){
