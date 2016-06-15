@@ -1,0 +1,12 @@
+* { margin: 0;
+ padding: 0;
+ background-color: #A62A2A;
+ color: #FFFFFF;
+}
+#nomes {
+position:absolute;
+left:5%;
+top:40%;
+ font-size: 30pt;
+font-family: Lucida Console;
+}
