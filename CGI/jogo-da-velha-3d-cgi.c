@@ -17,12 +17,22 @@ void checkdiagonal (char tabuleirod[3][3][3]);
 void checkplano (char tabuleirop[3][3][3]);
 
 int main(){
-    //declaração de variaveis locais
-    char tabuleiro[3][3][3];
+    printf("Content-type: text/html\r\n\r\n");
+
+    //declaração de variavies locais
+	char *parametros;
+	char tabuleiro[3][3][3];
     struct jogador jogador[2];
     struct jogador *turno;
     int x, y, z;
     srand(time(NULL));
+
+	parametros = getenv("QUERY_STRING");
+
+    sscanf(parametros, "nome1=%char nome2=%char",&jogador[0].nome,&jogador[1].nome);
+
+
+    //fazer a partir daqui
 
     //povoamento da array de variaveis heterogeneas
     jogador[0].unidade='X';
