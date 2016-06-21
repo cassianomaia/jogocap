@@ -1,12 +1,27 @@
-* { margin: 0;
- padding: 0;
- background-color: #A62A2A;
- color: #FFFFFF;
+* { 
+	margin: 0;
+	padding: 0;
+	background-image: url("tictactoe.jpg");
+	color: #FFFFFF;
 }
-#nomes {
-position:absolute;
-left:5%;
-top:40%;
- font-size: 30pt;
-font-family: Lucida Console;
+
+#nome {
+	display:inline-block;
+	text-align:center;
+	font-size: 30pt;
+	font-family: Open Sans;
+	margin-top:30%;
+	margin-left:20%;
+}
+#titulo {
+	position: center;
+}
+.button {
+    background-color: #e7e7e7;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
