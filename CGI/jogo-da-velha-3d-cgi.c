@@ -7,7 +7,8 @@
 int vitoria = 0;
 int i,j,k;
 struct jogador{
-    char unidade, nome[50];
+    int n;
+    char unidade;
     struct jogador *proximo;
 };
 
@@ -29,15 +30,17 @@ int main(){
 
 	parametros = getenv("QUERY_STRING");
 
-    sscanf(parametros, "nome1=%char nome2=%char",&jogador[0].nome,&jogador[1].nome);
+    sscanf(parametros, ,);
 
 
     //fazer a partir daqui
 
     //povoamento da array de variaveis heterogeneas
     jogador[0].unidade='X';
+    jogador[0].n=0;
     jogador[0].proximo = &jogador[1];
     jogador[1].unidade='O';
+    jogador[1].n=1;
     jogador[1].proximo = &jogador[0];
 
     //povoa o vetor com traços
@@ -49,19 +52,12 @@ int main(){
         }
     }
 
-    //nome dos jogadores
-    printf("Jogo da velha, digite o nome dos jogadores:\n");
-    printf("Jogador 1[X]:");
-    gets(jogador[0].nome);
-    printf("Jogador 2[O]:");
-    gets(jogador[1].nome);
-
     //fase de turnos, jogo começa
     turno = &jogador[rand()%2];
     do{
         turno = turno->proximo;
         printmatriz(tabuleiro);
-        printf("Turno de %s.\nDigite as coordenadas(X,Y,Z):\n", turno->nome);
+        printf("Turno de %e.\nDigite as coordenadas(X,Y,Z):\n", turno->n);
         printf("X:");
         scanf("%d", &x);
         printf("Y:");
@@ -85,7 +81,7 @@ int main(){
 
     //condição de vitória satisfeita
     printmatriz(tabuleiro);
-    printf("O jogador %s venceu !!!!!", turno->nome);
+    printf("O jogador %e venceu !!!!!", turno->n);
     return 0;
 }
 
