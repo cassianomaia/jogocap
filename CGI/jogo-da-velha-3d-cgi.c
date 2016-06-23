@@ -6,110 +6,94 @@
 //declaração de variaveis globais
 int vitoria = 0;
 int i,j,k;
+int contagem = 0;
 struct jogador{
-    int n;
     char unidade;
-    struct jogador *proximo;
 };
 
 //declaração de protótipos de funções
-void printmatriz (char tabuleirop[3][3][3]);
-void checkdiagonal (char tabuleirod[3][3][3]);
-void checkplano (char tabuleirop[3][3][3]);
+void printmatriz (char tabuleirop[3][3][3], int turno);
+int checkdiagonal (char tabuleirod[3][3][3]);
+int checkplano (char tabuleirop[3][3][3]);
 
 int main(){
     printf("Content-type: text/html\r\n\r\n");
 
     //declaração de variavies locais
 	char *parametros;
-	char tabuleiro[3][3][3];
-    struct jogador jogador[2];
-    struct jogador *turno;
+	char tabuleiro[3][3][3], matrizlin[27];
+    struct jogador jogadores[2];
+    int turno;
     int x, y, z;
     srand(time(NULL));
 
 	parametros = getenv("QUERY_STRING");
 
-    sscanf(parametros, ,);
+    if (sscanf(parametros, "x=%d&y=%d&z=%d&turno=%d&matriz=%s", &x, &y, &z, &turno, &matrizlin) != 5) {
+		for(k=0;k<3;k++){
+			for(i=0;i<3;i++){
+				for(j=0;j<3;j++){
+					tabuleiro[i][j][k]='-';
+				}
+			}
+		}
+		
+		jogadores[0].unidade = 'X';
+		jogadores[1].unidade = '0';
+		
+		turno = 0;
+		
+	} else {
+		contagem = 0;
+		for(k=0;k<3;k++){
+			for(j=0;j<3;j++){
+				for(i=0;i<3;i++){
+					tabuleiro[i][j][k] = matrizlin[contagem];
+					printf("%d %c", contagem, tabuleiro[i][j][k]);
+					contagem++;
+				}
+			}
+		}
+		
+		tabuleiro[x][y][z] = jogadores[turno].unidade;
+		printf("%c", jogadores[turno].unidade);
+        if (checkdiagonal(tabuleiro) || checkplano(tabuleiro)) {
+			printf("O jogador %c venceu !!!!!", jogadores[turno].unidade);	
+		}
 
-
-    //fazer a partir daqui
-
-    //povoamento da array de variaveis heterogeneas
-    jogador[0].unidade='X';
-    jogador[0].n=0;
-    jogador[0].proximo = &jogador[1];
-    jogador[1].unidade='O';
-    jogador[1].n=1;
-    jogador[1].proximo = &jogador[0];
-
-    //povoa o vetor com traços
-    for(k=0;k<3;k++){
-        for(i=0;i<3;i++){
-            for(j=0;j<3;j++){
-                tabuleiro[i][j][k]='-';
-            }
-        }
-    }
-
-    //fase de turnos, jogo começa
-    turno = &jogador[rand()%2];
-    do{
-        turno = turno->proximo;
-        printmatriz(tabuleiro);
-        printf("Turno de %e.\nDigite as coordenadas(X,Y,Z):\n", turno->n);
-        printf("X:");
-        scanf("%d", &x);
-        printf("Y:");
-        scanf("%d", &y);
-        printf("Z:");
-        scanf("%d", &z);
-        tabuleiro[x-1][y-1][z-1]=turno->unidade;
-        while((x<0)||(x>3)||(y<0)||(y>3)||(z<0)||(z>3)){
-            printf("Digite uma coordenada válida:\n");
-            printf("X:");
-            scanf("%d", &x);
-            printf("Y:");
-            scanf("%d", &y);
-            printf("Z:");
-            scanf("%d", &z);
-            tabuleiro[x-1][y-1][z-1]=turno->unidade;
-        }
-        checkdiagonal(tabuleiro);
-        checkplano(tabuleiro);
-    }while(vitoria!=1);
-
-    //condição de vitória satisfeita
-    printmatriz(tabuleiro);
-    printf("O jogador %e venceu !!!!!", turno->n);
+		turno = !turno;
+	}
+	
+    printmatriz(tabuleiro, turno);
     return 0;
 }
 
 //procedimentos
-void checkdiagonal (char tabuleirod[3][3][3]){
+int checkdiagonal (char tabuleirod[3][3][3]){
     if(((tabuleirod[1][1][1] == tabuleirod[0][0][0] && tabuleirod[1][1][1] == tabuleirod[2][2][2]) ||
         (tabuleirod[1][1][1] == tabuleirod[0][0][2] && tabuleirod[1][1][1] == tabuleirod[2][2][0]) ||
         (tabuleirod[1][1][1] == tabuleirod[0][2][0] && tabuleirod[1][1][1] == tabuleirod[2][0][2]) ||
         (tabuleirod[1][1][1] == tabuleirod[2][0][0] && tabuleirod[1][1][1] == tabuleirod[0][2][2])) && (tabuleirod[1][1][1] != '-')){
-        vitoria = 1;
+        return 1;
     }else{
         if(tabuleirod[1][1][1] == tabuleirod[1][1][3] && tabuleirod[1][1][1] == tabuleirod[1][1][2] && tabuleirod[1][1][1] != '-'){
-            vitoria = 1;
+            return 1;
         }
     }
+	return 0;
 }
 
-void checkplano (char tabuleirop[3][3][3]){
+int checkplano (char tabuleirop[3][3][3]){
     //checa em k
     for(k=0;k<3;k++){
         if((tabuleirop[0][0][k] == tabuleirop[1][1][k] && tabuleirop[0][0][k] == tabuleirop[2][2][k] && tabuleirop[0][0][k] != '-') ||
            (tabuleirop[0][2][k] == tabuleirop[1][1][k] && tabuleirop[0][2][k] == tabuleirop[2][0][k] && tabuleirop[0][2][k] != '-')){
-            vitoria = 1;
+            return 1;
         }else{
             for(i=0;i<3;i++){
                 if((tabuleirop[i][0][k] == tabuleirop[i][1][k] && tabuleirop[i][0][k] == tabuleirop[i][2][k] && tabuleirop[i][0][k] != '-')||
                    (tabuleirop[0][i][k] == tabuleirop[1][i][k] && tabuleirop[0][i][k] == tabuleirop[2][i][k] && tabuleirop[0][i][k] != '-')){
-                    vitoria = 1;
+                   return 1;
                 }
             }
         }
@@ -118,12 +102,12 @@ void checkplano (char tabuleirop[3][3][3]){
     for(i=0;i<3;i++){
         if((tabuleirop[i][0][0] == tabuleirop[i][1][1] && tabuleirop[i][0][0] == tabuleirop[i][2][2] && tabuleirop[i][0][0] != '-') ||
            (tabuleirop[i][2][0] == tabuleirop[i][1][1] && tabuleirop[i][2][0] == tabuleirop[i][0][2] && tabuleirop[i][2][0] != '-')){
-            vitoria = 1;
+            return 1;
         }else{
             for(k=0;k<3;k++){
                 if((tabuleirop[i][0][k] == tabuleirop[i][1][k] && tabuleirop[i][0][k] == tabuleirop[i][2][k] && tabuleirop[i][0][k] != '-')||
                    (tabuleirop[i][k][0] == tabuleirop[i][k][1] && tabuleirop[i][k][0] == tabuleirop[i][k][2] && tabuleirop[i][k][0] != '-')){
-                    vitoria = 1;
+                    return 1;
                 }
             }
         }
@@ -132,32 +116,45 @@ void checkplano (char tabuleirop[3][3][3]){
     for(j=0;j<3;j++){
         if((tabuleirop[0][j][0] == tabuleirop[1][j][1] && tabuleirop[0][j][0] == tabuleirop[2][j][2] && tabuleirop[0][j][0] != '-') ||
            (tabuleirop[0][j][2] == tabuleirop[1][j][1] && tabuleirop[0][j][2] == tabuleirop[2][j][0] && tabuleirop[0][j][2] != '-')){
-            vitoria = 1;
+            return 1;
         }else{
             for(i=0;i<3;i++){
                 if((tabuleirop[i][j][0] == tabuleirop[i][j][1] && tabuleirop[i][j][0] == tabuleirop[i][j][2] && tabuleirop[i][j][0] != '-')||
                    (tabuleirop[0][j][i] == tabuleirop[1][j][i] && tabuleirop[0][j][i] == tabuleirop[2][j][i] && tabuleirop[0][j][i] != '-')){
-                    vitoria = 1;
+                    return 1;
                 }
             }
         }
     }
+	
+	return 0;
 }
 
-void printmatriz (char tabuleirop[3][3][3]){
-    int contagem = 1;
-    system("cls");
-     for(k=0;k<3;k++){
-        printf(" \t1\t2\t3\n");
+void printmatriz (char tabuleirop[3][3][3], int turno){
+    contagem = 0;
+	char parametros[27];
+    
+	for(k=0;k<3;k++){
+        for(j=0;j<3;j++){
+            for(i=0;i<3;i++){
+				parametros[contagem] = tabuleirop[i][j][k];
+				contagem++;
+            }
+        }
+    }
+	
+	contagem = 1;
+	for(k=0;k<3;k++){
+        printf(" 1 2 3<br>");
         for(i=0;i<3;i++){
             printf("%d\t",contagem);
             for(j=0;j<3;j++){
-                printf("%c\t",tabuleirop[i][j][k]);
+                printf("<a href='?x=%d&y=%d&z=%d&turno=%d&matriz=%s'>%c</a> ", i, j, k, turno, parametros, tabuleirop[i][j][k]);
             }
             contagem++;
-            printf("\n");
+            printf("<br>");
         }
         contagem=1;
-        printf("\n\n");
+        printf("<br><br>");
     }
 }
