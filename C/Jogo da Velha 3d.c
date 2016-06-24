@@ -38,6 +38,9 @@ int main(){
             }
         }
     }
+    FILE *pMatriz = fopen("txt.bin","wb");
+    fwrite(tabuleiro, sizeof(char), 27, pMatriz);
+    fclose(pMatriz);
 
     //nome dos jogadores
     printf("Jogo da velha, digite o nome dos jogadores:\n");

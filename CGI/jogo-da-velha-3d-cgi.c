@@ -42,28 +42,39 @@ int main(){
 		turno = 0;
 		
 		// criação do arquivo
-		FILE *pMatriz = fopen("/home/bcc/726507/home/bcc/726507/public_HTML/cgi-bin/tabuleiro.bin","wb");
-		fwrite(tabuleiro, sizeof(char), 27, pMatriz);
-		fclose(pMatriz);
-		
+		FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","wb");
+		if(pMatriz){
+			fwrite(tabuleiro, sizeof(char), 27, pMatriz);
+			fclose(pMatriz);
+		}
+		printmatriz(tabuleiro, turno);	
 	} else {
 		
 		//leitura do arquivo 
-		FILE *pMatriz = fopen("/home/bcc/726507/home/bcc/726507/public_HTML/cgi-bin/tabuleiro.bin","rb");
-		fread(tabuleiro, sizeof(char), 27, pMatriz);
-		fclose(pMatriz);
-		
+		FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","rb");
+		if(pMatriz){
+			fread(tabuleiro, sizeof(char), 27, pMatriz);
+			fclose(pMatriz);
+		}
 		
 		tabuleiro[x][y][z] = jogadores[turno].unidade;
 		printf("%c", jogadores[turno].unidade);
         if (checkdiagonal(tabuleiro) || checkplano(tabuleiro)) {
-			printf("O jogador %c venceu !!!!!", jogadores[turno].unidade);	
+			printf("O jogador %c venceu !!!!!", jogadores[turno].unidade);
+			printmatriz(tabuleiro, turno);
+		}else{
+			turno = !turno;
+			printmatriz(tabuleiro, turno);
 		}
-
-		turno = !turno;
+		FILE *pMatriz2 = fopen("/home/bcc/726507/public_html/tabuleiro.bin","wb");
+		if(pMatriz2){
+			fwrite(tabuleiro, sizeof(char), 27, pMatriz2);
+			fclose(pMatriz2);
+		}
 	}
+
 	
-    printmatriz(tabuleiro, turno);
+    
     return 0;
 }
 
