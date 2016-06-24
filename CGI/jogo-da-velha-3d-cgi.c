@@ -5,7 +5,6 @@
 //declaração de variaveis globais
 int vitoria = 0;
 int i,j,k;
-int contagem = 0;
 struct jogador{
     char unidade;
 };
@@ -14,10 +13,10 @@ struct jogador{
 void printmatriz (char tabuleirop[3][3][3], int turno);
 int checkdiagonal (char tabuleirod[3][3][3]);
 int checkplano (char tabuleirop[3][3][3]);
+void gravaarquivo (char *tabuleirop);
+void learquivo (char *tabuleirop);
 
 int main(){
-    printf("Content-type: text/html\r\n\r\n");
-
     //declaração de variavies locais
 	char *parametros;
 	char tabuleiro[3][3][3];
@@ -27,6 +26,10 @@ int main(){
 
 	parametros = getenv("QUERY_STRING");
 
+		
+	jogadores[0].unidade = 'X';
+	jogadores[1].unidade = 'O';
+	
     if (sscanf(parametros, "x=%d&y=%d&z=%d&turno=%d", &x, &y, &z, &turno) != 4) {
 		for(k=0;k<3;k++){
 			for(i=0;i<3;i++){
@@ -35,46 +38,26 @@ int main(){
 				}
 			}
 		}
-		
-		jogadores[0].unidade = 'X';
-		jogadores[1].unidade = '0';
 
 		turno = 0;
 		
 		// criação do arquivo
-		FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","wb");
-		if(pMatriz){
-			fwrite(tabuleiro, sizeof(char), 27, pMatriz);
-			fclose(pMatriz);
-		}
-		printmatriz(tabuleiro, turno);	
+		gravaarquivo(tabuleiro);
 	} else {
 		
 		//leitura do arquivo 
-		FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","rb");
-		if(pMatriz){
-			fread(tabuleiro, sizeof(char), 27, pMatriz);
-			fclose(pMatriz);
-		}
-		
-		tabuleiro[x][y][z] = jogadores[turno].unidade;
-		printf("%c", jogadores[turno].unidade);
-        if (checkdiagonal(tabuleiro) || checkplano(tabuleiro)) {
-			printf("O jogador %c venceu !!!!!", jogadores[turno].unidade);
-			printmatriz(tabuleiro, turno);
-		}else{
+		learquivo(tabuleiro);
+		if(tabuleiro[x][y][z] == '-'){
+			tabuleiro[x][y][z] = jogadores[turno].unidade;
+
+			if (checkdiagonal(tabuleiro) || checkplano(tabuleiro)) {
+				vitoria = 1;
+			}
 			turno = !turno;
-			printmatriz(tabuleiro, turno);
-		}
-		FILE *pMatriz2 = fopen("/home/bcc/726507/public_html/tabuleiro.bin","wb");
-		if(pMatriz2){
-			fwrite(tabuleiro, sizeof(char), 27, pMatriz2);
-			fclose(pMatriz2);
+			gravaarquivo(tabuleiro);
 		}
 	}
-
-	
-    
+	printmatriz(tabuleiro, turno);
     return 0;
 }
 
@@ -140,19 +123,44 @@ int checkplano (char tabuleirop[3][3][3]){
 	return 0;
 }
 
+void gravaarquivo (char *tabuleirop){
+	FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","wb");
+		if(pMatriz){
+			fwrite(tabuleirop, sizeof(char), 27, pMatriz);
+			fclose(pMatriz);
+		}
+}
+
+void learquivo (char *tabuleirop){
+	FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","rb");
+		if(pMatriz){
+			fread(tabuleirop, sizeof(char), 27, pMatriz);
+			fclose(pMatriz);
+		}
+}
+
 void printmatriz (char tabuleirop[3][3][3], int turno){	
-	contagem = 1;
+	printf("Content-type: text/html\r\n\r\n");
+	printf("<HTML>"
+		"<head>"
+		"<meta charset='utf-8'>"
+		"<title> Tic Tac Toe 3D </title>"
+		"<link rel='stylesheet' href='../jogo.css' type='text/css' >"
+		"</head>"
+		"<body>"
+	);
 	for(k=0;k<3;k++){
-        printf(" 1 2 3<br>");
-        for(i=0;i<3;i++){
-            printf("%d\t",contagem);
-            for(j=0;j<3;j++){
-                printf("<a href='?x=%d&y=%d&z=%d&turno=%d'>%c</a> ", i, j, k, turno, tabuleirop[i][j][k]);
-            }
-            contagem++;
-            printf("<br>");
-        }
-        contagem=1;
-        printf("<br><br>");
-    }
+		for(i=0;i<3;i++){
+			for(j=0;j<3;j++){
+				printf("<%s href='?x=%d&y=%d&z=%d&turno=%d'>%c</%s> ", vitoria ? "span" : "a", i, j, k, turno, tabuleirop[i][j][k], vitoria ? "span" : "a");
+			}
+			printf("<br>");
+		}
+		printf("<br><br>");
+	}
+	if (vitoria) {
+		turno != turno;
+		printf("O jogador %c venceu!", turno ? 'X' : 'O');
+	}
+	printf("</body>");
 }

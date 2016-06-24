@@ -1,0 +1,14 @@
+* { 
+	margin: 0;
+	padding: 0;
+	background-image: url("tictactoe.jpg");
+	color: #FFFFFF;
+}
+
+a, span {
+    text-decoration: none;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    width: 19px;
+}
