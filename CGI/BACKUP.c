@@ -20,14 +20,14 @@ int main(){
 
     //declaração de variavies locais
 	char *parametros;
-	char tabuleiro[3][3][3];
+	char tabuleiro[3][3][3], matrizlin[27];
     struct jogador jogadores[2];
     int turno;
     int x, y, z;
 
 	parametros = getenv("QUERY_STRING");
 
-    if (sscanf(parametros, "x=%d&y=%d&z=%d&turno=%d", &x, &y, &z, &turno) != 4) {
+    if (sscanf(parametros, "x=%d&y=%d&z=%d&turno=%d&matriz=%s", &x, &y, &z, &turno, &matrizlin) != 5) {
 		for(k=0;k<3;k++){
 			for(i=0;i<3;i++){
 				for(j=0;j<3;j++){
@@ -41,18 +41,16 @@ int main(){
 
 		turno = 0;
 		
-		// criação do arquivo
-		FILE *pMatriz = fopen("/home/bcc/726507/home/bcc/726507/public_HTML/cgi-bin/tabuleiro.bin","wb");
-		fwrite(tabuleiro, sizeof(char), 27, pMatriz);
-		fclose(pMatriz);
-		
 	} else {
-		
-		//leitura do arquivo 
-		FILE *pMatriz = fopen("/home/bcc/726507/home/bcc/726507/public_HTML/cgi-bin/tabuleiro.bin","rb");
-		fread(tabuleiro, sizeof(char), 27, pMatriz);
-		fclose(pMatriz);
-		
+		contagem = 0;
+		for(k=0;k<3;k++){
+			for(j=0;j<3;j++){
+				for(i=0;i<3;i++){
+					matrizlin[contagem] = tabuleiro[i][j][k];
+					contagem++;
+				}
+			}
+		}
 		
 		tabuleiro[x][y][z] = jogadores[turno].unidade;
 		printf("%c", jogadores[turno].unidade);
@@ -129,14 +127,26 @@ int checkplano (char tabuleirop[3][3][3]){
 	return 0;
 }
 
-void printmatriz (char tabuleirop[3][3][3], int turno){	
+void printmatriz (char tabuleirop[3][3][3], int turno){
+    contagem = 0;
+	char parametro[27];
+    
+	for(k=0;k<3;k++){
+       for(j=0;j<3;j++){
+            for(i=0;i<3;i++){
+				parametro[contagem] = tabuleirop[i][j][k];
+				contagem++;
+            }
+        }
+    }
+	
 	contagem = 1;
 	for(k=0;k<3;k++){
         printf(" 1 2 3<br>");
         for(i=0;i<3;i++){
             printf("%d\t",contagem);
             for(j=0;j<3;j++){
-                printf("<a href='?x=%d&y=%d&z=%d&turno=%d'>%c</a> ", i, j, k, turno, tabuleirop[i][j][k]);
+                printf("<a href='?x=%d&y=%d&z=%d&turno=%d&matriz=%s'>%c</a> ", i, j, k, turno, parametro, tabuleirop[i][j][k]);
             }
             contagem++;
             printf("<br>");
