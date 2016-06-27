@@ -48,3 +48,9 @@ display:inline-block;
     display: inline-block;
     font-size: 16px;
 }
+div.image {
+   content:url("titulo.png");
+   position:absolute;
+   top:0;
+   left:0;
+}​
