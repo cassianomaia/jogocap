@@ -4,17 +4,28 @@
 	background-image: url("tictactoe.jpg");
 	color: #FFFFFF;
 }
-
-#nome {
-	display:inline-block;
-	text-align:center;
+#titulo {
+display:inline-block;
+	text-align:absolute;
 	font-size: 30pt;
 	font-family: Open Sans;
-	margin-top:35%;
-	margin-left:20%;
+	margin-top:5%;
+	margin-left:0%;
 }
-#titulo {
-	position: center;
+#descricao {
+	display:inline-block;
+	text-align:absolute;
+	font-size: 20pt;
+	font-family: Open Sans;
+	margin-top:0%;
+	margin-left:0%;
+}
+#botao {
+	text-align:center;
+	font-size: 20pt;
+	font-family: Open Sans;
+	margin-top:8%;
+	margin-left:0%;
 }
 .button {
     background-color: #e7e7e7;
