@@ -1,7 +1,7 @@
-* { 
+body { 
 	margin: 0;
 	padding: 0;
-	background-image: url("tictactoe.jpg");
+	background-image: url('titulo.png') no-repeat, url("tictactoe.jpg");
 	color: #FFFFFF;
 }
 #titulo {
