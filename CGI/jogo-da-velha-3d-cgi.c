@@ -164,8 +164,13 @@ void printmatriz (char tabuleirop[3][3][3], int turno){
 	printf("</div>");
 	if (vitoria) {
 		turno != turno;
+		printf("<div id='vitoria'>");
 		printf("O jogador %c venceu!", turno ? 'X' : 'O');
-		printf("<div id="botao"><form action="http://cap.dc.ufscar.br/~726507/cgi-bin/jogo-da-velha-3d-cgi.cgi" method="get"><input class="button" type="submit" value="Restart"/></form></div>");
+		printf("<div id='botao'><form action='http://cap.dc.ufscar.br/~726507/cgi-bin/jogo-da-velha-3d-cgi.cgi' method='get'>"
+		"<input class='button' type='submit' value='Restart'/>"
+		"</form>"
+		"</div>");
+		printf("</div");
 	}
 	printf("</body>");
 }
