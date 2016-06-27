@@ -6,8 +6,17 @@
 }
 #titulo {
 display:inline-block;
+	text-align:center;
+	font-size: 15pt;
+	font-family: 'Open Sans', Sans-serif;
+	margin-top:5%;
+	margin-left:0 auto;
+	color:white;
+}
+#subtitulo {
+display:inline-block;
 	text-align:absolute;
-	font-size: 30pt;
+	font-size: 25pt;
 	font-family: 'Open Sans', Sans-serif;
 	margin-top:5%;
 	margin-left:0%;
