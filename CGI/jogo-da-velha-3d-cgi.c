@@ -149,15 +149,19 @@ void printmatriz (char tabuleirop[3][3][3], int turno){
 		"</head>"
 		"<body>"
 	);
+	printf("<div id='tabuleiro'>");
 	for(k=0;k<3;k++){
+		printf("<div id='cubo'>");
 		for(i=0;i<3;i++){
 			for(j=0;j<3;j++){
 				printf("<%s href='?x=%d&y=%d&z=%d&turno=%d'>%c</%s> ", vitoria ? "span" : "a", i, j, k, turno, tabuleirop[i][j][k], vitoria ? "span" : "a");
 			}
 			printf("<br>");
 		}
+		printf("</div>");
 		printf("<br><br>");
 	}
+	printf("</div>");
 	if (vitoria) {
 		turno != turno;
 		printf("O jogador %c venceu!", turno ? 'X' : 'O');

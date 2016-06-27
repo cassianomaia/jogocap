@@ -12,3 +12,11 @@ a, span {
     display: inline-block;
     width: 19px;
 }
+
+#cubo{
+	transform: skewX(-25deg);
+}
+
+#tabuleiro{
+	text-align: center;
+}
