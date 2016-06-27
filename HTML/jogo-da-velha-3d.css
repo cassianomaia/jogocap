@@ -1,7 +1,7 @@
 body { 
 	margin: 0;
 	padding: 0;
-	background-image: url('titulo.png') no-repeat, url("tictactoe.jpg");
+	background: url('titulo.png') no-repeat, url("tictactoe.jpg");
 	color: #FFFFFF;
 }
 #titulo {
@@ -18,7 +18,7 @@ display:inline-block;
 	text-align:absolute;
 	font-size: 25pt;
 	font-family: 'Open Sans', Sans-serif;
-	margin-top:5%;
+	margin-top:15%;
 	margin-left:0%;
 	color:white;
 }
@@ -30,6 +30,7 @@ display:inline-block;
 	margin-top:0%;
 	margin-left:0%;
 	color:white;
+	width:50%;
 }
 #botao {
 	text-align:center;
@@ -40,13 +41,14 @@ display:inline-block;
     margin: 0 auto;
 }
 .button {
-    background-color: #e7e7e7;
+    background-color: black;
     color: white;
     padding: 15px 32px;
     text-align: center;
-    text-decoration: none;
+    text-decoration: black;
     display: inline-block;
     font-size: 16px;
+	border: 1px solid white;
 }
 div.image {
    content:url("titulo.png");
