@@ -165,6 +165,11 @@ void printmatriz (char tabuleirop[3][3][3], int turno){
 	if (vitoria) {
 		turno != turno;
 		printf("O jogador %c venceu!", turno ? 'X' : 'O');
+		<div id="botao">
+			<form action="http://cap.dc.ufscar.br/~726507/cgi-bin/jogo-da-velha-3d-cgi.cgi" method="get">
+			<input class="button" type="submit" value="Restart"/>
+		</form>
+	</div>
 	}
 	printf("</body>");
 }
