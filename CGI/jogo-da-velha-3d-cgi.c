@@ -69,7 +69,7 @@ int checkdiagonal (char tabuleirod[3][3][3]){
         (tabuleirod[1][1][1] == tabuleirod[2][0][0] && tabuleirod[1][1][1] == tabuleirod[0][2][2])) && (tabuleirod[1][1][1] != '-')){
         return 1;
     }else{
-        if(tabuleirod[1][1][1] == tabuleirod[1][1][3] && tabuleirod[1][1][1] == tabuleirod[1][1][2] && tabuleirod[1][1][1] != '-'){
+        if(tabuleirod[1][1][0] == tabuleirod[1][1][2] && tabuleirod[1][1][0] == tabuleirod[1][1][1] && tabuleirod[1][1][0] != '-'){
             return 1;
         }
     }
