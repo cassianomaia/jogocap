@@ -1,10 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include <time.h>
 
 //declaração de variaveis globais
 int vitoria = 0;
 int i,j,k;
+char nomeArquivo[32];
 struct jogador{
     char unidade;
 };
@@ -23,14 +25,20 @@ int main(){
     struct jogador jogadores[2];
     int turno;
     int x, y, z;
-
+	
+	//Pegando time para gerar nome unico de arquivo
+	time_t rawTime;
+    time(&rawTime);
+	struct tm* time;
+    time = localtime(&rawTime);
+	
 	parametros = getenv("QUERY_STRING");
 
 		
 	jogadores[0].unidade = 'X';
 	jogadores[1].unidade = 'O';
 	
-    if (sscanf(parametros, "x=%d&y=%d&z=%d&turno=%d", &x, &y, &z, &turno) != 4) {
+    if (sscanf(parametros, "x=%d&y=%d&z=%d&turno=%d&nomeArquivo=%s", &x, &y, &z, &turno, &nomeArquivo) != 5) {
 		for(k=0;k<3;k++){
 			for(i=0;i<3;i++){
 				for(j=0;j<3;j++){
@@ -40,6 +48,16 @@ int main(){
 		}
 
 		turno = 0;
+		
+		//Criando nome do arquivo
+		sprintf(nomeArquivo,
+            "/home/bcc/726507/public_html/filesave/%04d%02d%02d_%02d%02d%02d.txt",
+            time->tm_year + 1900,
+            time->tm_mon + 1,
+            time->tm_mday,
+            time->tm_hour,
+            time->tm_min,
+            time->tm_sec);
 		
 		// criação do arquivo
 		gravaarquivo(tabuleiro);
@@ -124,7 +142,7 @@ int checkplano (char tabuleirop[3][3][3]){
 }
 
 void gravaarquivo (char *tabuleirop){
-	FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","wb");
+	FILE *pMatriz = fopen(nomeArquivo,"wb");
 		if(pMatriz){
 			fwrite(tabuleirop, sizeof(char), 27, pMatriz);
 			fclose(pMatriz);
@@ -132,7 +150,7 @@ void gravaarquivo (char *tabuleirop){
 }
 
 void learquivo (char *tabuleirop){
-	FILE *pMatriz = fopen("/home/bcc/726507/public_html/tabuleiro.bin","rb");
+	FILE *pMatriz = fopen(nomeArquivo,"rb");
 		if(pMatriz){
 			fread(tabuleirop, sizeof(char), 27, pMatriz);
 			fclose(pMatriz);
@@ -174,7 +192,7 @@ void printmatriz (char tabuleirop[3][3][3], int turno){
 		printf("<div id='cubo'>");
 		for(i=0;i<3;i++){
 			for(j=0;j<3;j++){
-				printf("<%s href='?x=%d&y=%d&z=%d&turno=%d'>%c</%s> ", vitoria ? "span" : "a", i, j, k, turno, tabuleirop[i][j][k], vitoria ? "span" : "a");
+				printf("<%s href='?x=%d&y=%d&z=%d&turno=%d&nomeArquivo=%s'>%c</%s> ", vitoria ? "span" : "a", i, j, k, turno, nomeArquivo, tabuleirop[i][j][k], vitoria ? "span" : "a");
 			}
 			printf("<br>");
 		}
