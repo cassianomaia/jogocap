@@ -3,15 +3,15 @@
 #include<string.h>
 #include <time.h>
 
-//declaração de variaveis globais
+//declaraÃ§Ã£o de variaveis globais
 int vitoria = 0;
 int i,j,k;
-char nomeArquivo[32];
+char nomeArquivo[64];
 struct jogador{
     char unidade;
 };
 
-//declaração de protótipos de funções
+//declaraÃ§Ã£o de protÃ³tipos de funÃ§Ãµes
 void printmatriz (char tabuleirop[3][3][3], int turno);
 int checkdiagonal (char tabuleirod[3][3][3]);
 int checkplano (char tabuleirop[3][3][3]);
@@ -19,7 +19,7 @@ void gravaarquivo (char *tabuleirop);
 void learquivo (char *tabuleirop);
 
 int main(){
-    //declaração de variavies locais
+    //declaraÃ§Ã£o de variavies locais
 	char *parametros;
 	char tabuleiro[3][3][3];
     struct jogador jogadores[2];
@@ -59,7 +59,7 @@ int main(){
             time->tm_min,
             time->tm_sec);
 		
-		// criação do arquivo
+		// criaÃ§Ã£o do arquivo
 		gravaarquivo(tabuleiro);
 	} else {
 		
